@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify NDN</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000000;
+            line-height: 1.3;
+            margin: 40px;
+            background-color: #ffffff;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+        }
+
+        .ndn-text {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin-top: 4px;
+            margin-bottom: 22px;
+        }
+
+        .content-block {
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .content-line {
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .section-heading {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 24px;
+            margin-bottom: 14px;
+        }
+
+        ul {
+            margin-top: 5px;
+            padding-left: 18px;
+            list-style-type: disc;
+        }
+
+        li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .italic-text {
+            font-style: italic;
+        }
+
+        a {
+            color: #0000FF;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">NERD Compliance Verification</div>
+    
+    <div class="ndn-text" id="ndn-display">NDN: PRJ-2017736602603833293</div>
+    
+    <hr>
+
+    <div class="content-block">
+        <span class="content-line"><span class="label">Title:</span> EXTRACTION OF NATURAL DYE FROM TURMERIC RHIZOMES FOR COSMETICS USE</span>
+        <span class="content-line"><span class="label">Student name:</span> Timloh Sargwak</span>
+        <span class="content-line"><span class="label">Institution:</span> University of Jos, Jos, Plateau State</span>
+        <span class="content-line"><span class="label">Faculty:</span> Natural Sciences</span>
+        <span class="content-line"><span class="label">Department:</span> Science Laboratory Technology</span>
+        <span class="content-line"><span class="label">Submission Type:</span> Project</span>
+        <span class="content-line"><span class="label">Date of Submission:</span> 2026-05-23 12:34:20</span>
+    </div>
+
+    <div class="section-heading">Compliance</div>
+
+    <ul>
+        <li>NCVS Compliance: <span class="italic-text">Not enforced</span></li>
+        <li>Academic report submission: Complied</li>
+    </ul>
+
+    <div class="section-heading">Documents:</div>
+
+    <ul>
+        <li><a href="#">System Generated PDF</a></li>
+    </ul>
+
+    <script>
+        // This script looks at the URL parameters, exactly like PHP $_GET['ndn']
+        const urlParams = new URLSearchParams(window.location.search);
+        const ndnParam = urlParams.get('ndn');
+
+        // If an NDN is found in the link parameters, update the page text instantly
+        if (ndnParam) {
+            // Clean up the input text formatting if someone types "NDN-" in the query parameter
+            const cleanNDN = ndnParam.replace(/^NDN-/i, '');
+            document.getElementById('ndn-display').innerText = "NDN: " + cleanNDN;
+        }
+    </script>
+
+</body>
+</html>
