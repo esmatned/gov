@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify NDN</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #000000;
+            line-height: 1.3;
+            margin: 40px;
+            background-color: #ffffff;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+        }
+
+        .ndn-text {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin-top: 4px;
+            margin-bottom: 22px;
+        }
+
+        .content-block {
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .content-line {
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .section-heading {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 24px;
+            margin-bottom: 14px;
+        }
+
+        ul {
+            margin-top: 5px;
+            padding-left: 18px;
+            list-style-type: disc;
+        }
+
+        li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .italic-text {
+            font-style: italic;
+        }
+
+        a {
+            color: #0000FF;
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: red;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page-content">
+        <div class="header-title">NERD Compliance Verification</div>
+        
+        <div class="ndn-text" id="ndn-display">NDN: Loading...</div>
+        
+        <hr>
+
+        <div class="content-block">
+            <span class="content-line"><span class="label">Title:</span> <span id="title-display">Loading...</span></span>
+            <span class="content-line"><span class="label">Student name:</span> <span id="student-display">Loading...</span></span>
+            <span class="content-line"><span class="label">Institution:</span> <span id="institution-display">Loading...</span></span>
+            <span class="content-line"><span class="label">Faculty:</span> <span id="faculty-display">Loading...</span></span>
+            <span class="content-line"><span class="label">Department:</span> <span id="department-display">Loading...</span></span>
+            <span class="content-line"><span class="label">Submission Type:</span> <span id="type-display">Loading...</span></span>
+            <span class="content-line"><span class="label">Date of Submission:</span> <span id="date-display">Loading...</span></span>
+        </div>
+
+        <div class="section-heading">Compliance</div>
+
+        <ul>
+            <li>NCVS Compliance: <span class="italic-text" id="ncvs-display">Loading...</span></li>
+            <li>Academic report submission: <span id="report-display">Loading...</span></li>
+        </ul>
+
+        <div class="section-heading">Documents:</div>
+
+        <ul>
+            <li><a href="#" id="pdf-link">System Generated PDF</a></li>
+        </ul>
+    </div>
+
+    <div id="error-container" class="error-message" style="display: none;">
+        Invalid URL: No valid NDN record found.
+    </div>
+
+    <script>
+        // 1. This holds all your student records. You can easily paste new ones here later!
+        const ndnDatabase = {
+            "PRJ-2017736602603833293": {
+                title: "EXTRACTION OF NATURAL DYE FROM TURMERIC RHIZOMES FOR COSMETICS USE",
+                student: "TIMLOH SARGWAK",
+                institution: "University of Jos, Jos, Plateau State",
+                faculty: "Natural Sciences",
+                department: "Science Laboratory Technology",
+                type: "Project",
+                date: "2026-05-23 12:34:20",
+                ncvs: "Not enforced",
+                report: "Complied"
+            },
+            "PRJ-2026031608332773611": {
+                title: "ASSESSMENT OF THE QUALITY OF THE SOIL USED IN IRRIGATION FARMING NEAR MINING SITES IN JOS SOUTH, PLATEAU STATE.",
+                student: "Dashe Nantip Ishaya",
+                institution: "University of Jos, Jos, Plateau State",
+                faculty: "Natural Sciences",
+                department: "Science Laboratory Technology",
+                type: "Project",
+                date: "2026-05-23 10:14:12",
+                ncvs: "Not enforced",
+                report: "Complied"
+            }
+        };
+
+        // 2. Read the parameter from the URL address bar
+        const urlParams = new URLSearchParams(window.location.search);
+        let ndnParam = urlParams.get('ndn');
+
+        if (ndnParam) {
+            // Clean up the text in case someone included "NDN-" in their link address
+            ndnParam = ndnParam.replace(/^NDN-/i, '').trim();
+
+            // 3. Look up the record inside our database object
+            const record = ndnDatabase[ndnParam];
+
+            if (record) {
+                // 4. Inject the data dynamically into the page HTML elements
+                document.getElementById('ndn-display').innerText = "NDN: " + ndnParam;
+                document.getElementById('title-display').innerText = record.title;
+                document.getElementById('student-display').innerText = record.student;
+                document.getElementById('institution-display').innerText = record.institution;
+                document.getElementById('faculty-display').innerText = record.faculty;
+                document.getElementById('department-display').innerText = record.department;
+                document.getElementById('type-display').innerText = record.type;
+                document.getElementById('date-display').innerText = record.date;
+                document.getElementById('ncvs-display').innerText = record.ncvs;
+                document.getElementById('report-display').innerText = record.report;
+            } else {
+                // If the NDN number doesn't match any record in your list
+                document.getElementById('page-content').style.display = 'none';
+                document.getElementById('error-container').style.display = 'block';
+                document.getElementById('error-container').innerText = "NDN Record '" + ndnParam + "' Not Found.";
+            }
+        } else {
+            // If someone opens the page completely without an "?ndn=" parameter
+            document.getElementById('page-content').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+            document.getElementById('error-container').innerText = "Please provide an NDN query parameter in the link.";
+        }
+    </script>
+
+</body>
+</html>
