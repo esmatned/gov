@@ -22,8 +22,11 @@
 
         .ndn-text {
             font-size: 15px;
-            font-weight: bold;
             margin-bottom: 8px;
+        }
+
+        .ndn-label {
+            font-weight: bold;
         }
 
         hr {
@@ -69,6 +72,16 @@
             font-style: italic;
         }
 
+        /* Solid green background box for compliance status highlights */
+        .status-badge {
+            background-color: #2e7d32;
+            color: #ffffff;
+            padding: 1px 4px;
+            font-weight: normal;
+            border-radius: 1px;
+            display: inline-block;
+        }
+
         a {
             color: #0000FF;
             text-decoration: underline;
@@ -86,7 +99,7 @@
     <div id="page-content">
         <div class="header-title">NERD Compliance Verification</div>
         
-        <div class="ndn-text" id="ndn-display">NDN: Loading...</div>
+        <div class="ndn-text"><span class="ndn-label">NDN:</span> <span id="ndn-display">Loading...</span></div>
         
         <hr>
 
@@ -133,7 +146,7 @@
                 report: "Complied"
             },
             "PRJ-2026031608332773611": {
-                title: "ASSESSMENT OF THE QUALITY OF THE SOIL USED IN IRRIGATION FARMING NEAR MINING SITES IN JOS SOUTH, PLATEAU STATE.",
+                title: "ASSESSMENT OF THE IRRIGATION FARMLAND NEAR MINING SITES IN JOS SOUTH PLATEAU STATE",
                 student: "Dashe Nantip Ishaya",
                 institution: "University of Jos, Jos, Plateau State",
                 faculty: "Natural Sciences",
@@ -158,7 +171,7 @@
 
             if (record) {
                 // 4. Inject the data dynamically into the page HTML elements
-                document.getElementById('ndn-display').innerText = "NDN: " + ndnParam;
+                document.getElementById('ndn-display').innerText = ndnParam;
                 document.getElementById('title-display').innerText = record.title;
                 document.getElementById('student-display').innerText = record.student;
                 document.getElementById('institution-display').innerText = record.institution;
@@ -167,7 +180,13 @@
                 document.getElementById('type-display').innerText = record.type;
                 document.getElementById('date-display').innerText = record.date;
                 document.getElementById('ncvs-display').innerText = record.ncvs;
-                document.getElementById('report-display').innerText = record.report;
+                
+                // Evaluates the text status string to automatically append the green badge component style if verified
+                if(record.report.toLowerCase() === 'complied') {
+                    document.getElementById('report-display').innerHTML = `<span class="status-badge">${record.report}</span>`;
+                } else {
+                    document.getElementById('report-display').innerText = record.report;
+                }
             } else {
                 // If the NDN number doesn't match any record in your list
                 document.getElementById('page-content').style.display = 'none';
